@@ -1,10 +1,28 @@
+/*soundManager.setup({
+  url: '/path/to/swf-files/',
+  onready: function() {
+    var mySound = soundManager.createSound({
+      id: 'aSound',
+      url: '/path/to/an.mp3'
+    });
+    mySound.play();
+  },
+  ontimeout: function() {
+    // Hrmm, SM2 could not start. Missing SWF? Flash blocked? Show an error, etc.?
+  }
+});
+
+*/
+
+
 (function($) {
 
 	$.fn.Tarabu = function(options) {
 		$.fn.Tarabu.defaults = {
 			soundcloud_user: null,
 			soundcloud_clientId: null,
-			playlist: 'soundcloud'
+			playlist: 'soundcloud',
+			locked: 'twitter'
 		};
 		var o = $.extend({}, $.fn.Tarabu.defaults, options);
 		return this.each(function() {			
@@ -31,7 +49,7 @@
 									url = track.stream_url;
 									(url.indexOf("secret_token") == -1) ? url = url + '?' : url = url + '&';
 									url = url + 'client_id=' + o.client_id;
-								});
+																	});
 								i++			
 							});
 						});
@@ -45,6 +63,28 @@
 			} else {
 				alert('local');	
 			}
+			
+		if (o.locked == 'twitter') {
+			$.getScript("http://platform.twitter.com/widgets.js", function(){
+				function handleTweetEvent(event){
+					if (event) {
+						alert("This is a callback from a tweet")
+					}
+				}	
+				twttr.events.bind('tweet', handleTweetEvent);        
+			});
+		} else if (o.locked == 'facebook') {
+			$.getScript("http://platform.twitter.com/widgets.js", function(){
+				function handleTweetEvent(event){
+					if (event) {
+						alert("This is a callback from a tweet")
+					}
+				}	
+				twttr.events.bind('tweet', handleTweetEvent);        
+			});
+		}
+			
+		
 		});
 	};
 })(jQuery);
