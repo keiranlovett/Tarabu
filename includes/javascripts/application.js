@@ -21,8 +21,8 @@
 		$.fn.Tarabu.defaults = {
 			soundcloud_user: null,
 			soundcloud_clientId: null,
-			playlist: 'soundcloud',
-			locked: 'twitter'
+			playlist: null,
+			locked: null
 		};
 		var o = $.extend({}, $.fn.Tarabu.defaults, options);
 		return this.each(function() {			
@@ -44,12 +44,12 @@
 								//get track data
 								$.each(playlist.tracks, function(index, track) {
 									// Create a list item for track, associate it's data, and append it to the track list.
-									var $li = $('<li class="track_' + track.id + '">' + (index + 1) + '. ' + track.title + '</li>').data('track', track).appendTo('#id'+i+' .tracks');
+									var $li = $('<li class="track_' + track.id + '">' + track.title + '</li>').data('track', track).appendTo('#id'+i+' .tracks');
 								// Find the appropriate stream url depending on whether the track has a secret_token or is public.
 									url = track.stream_url;
 									(url.indexOf("secret_token") == -1) ? url = url + '?' : url = url + '&';
 									url = url + 'client_id=' + o.client_id;
-																	});
+								});
 								i++			
 							});
 						});
@@ -63,28 +63,42 @@
 			} else {
 				alert('local');	
 			}
-			
-		if (o.locked == 'twitter') {
-			$.getScript("http://platform.twitter.com/widgets.js", function(){
-				function handleTweetEvent(event){
-					if (event) {
-						alert("This is a callback from a tweet")
-					}
-				}	
-				twttr.events.bind('tweet', handleTweetEvent);        
-			});
-		} else if (o.locked == 'facebook') {
-			$.getScript("http://platform.twitter.com/widgets.js", function(){
-				function handleTweetEvent(event){
-					if (event) {
-						alert("This is a callback from a tweet")
-					}
-				}	
-				twttr.events.bind('tweet', handleTweetEvent);        
-			});
+		//Lock Logic
+		// User can lock the app requiring the users to perform an action before they can download it. Facebook, Twitter sharing. Timed
+		if(typeof(o.locked) != "undefined" && o.locked !== null) {
+			if (o.locked == 'twitter') {
+				$.getScript("http://platform.twitter.com/widgets.js", function(){
+					function handleTweetEvent(event){
+						if (event) {
+							alert("This is a callback from a tweet")
+							//Append twitter handle
+						}
+					}	
+					twttr.events.bind('tweet', handleTweetEvent);        
+				});
+			} else if (o.locked == 'facebook') {
+				window.fbAsyncInit = function() {
+				    FB.init({appId: '185324271585974', status: true, cookie: true, xfbml: true});
+				    FB.Event.subscribe('edge.create', function(href, widget) {
+				 	  	 alert('You just liked the page!');
+				 	  	 //Append facebook handle
+				 	});
+				};	
+			} else {
+				var date 	= new Date();
+				date.setFullYear(2020,1,1);
+				var _now 	= new Date();
+				var month 	= date.getMonth() + 1
+				var day 	= date.getDate()
+				var year 	= date.getFullYear()
+
+				if(date.getTime() > _now.getTime()) {
+					alert('Unlock on ' + month + "/" + day + "/" + year);
+				} else {
+					alert('date is past');
+				}
+			}
 		}
-			
-		
 		});
 	};
 })(jQuery);
