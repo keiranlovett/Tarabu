@@ -1,36 +1,59 @@
-<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="https://www.facebook.com/2008/fbml">
 <head>
 	<script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
     <script type="text/javascript" src="includes/javascripts/application.js"></script>
+    
 </head>
 <body>
 
-<div class="soundcloud"></div>
+<div class="test"></div>
+
+<a href="http://twitter.com/intent/tweet?url=http://test.com;via=stack">twitter</a>
+<a href="#" class="downloadButton">Download</a>
+<fb:like></fb:like>
 
 	
 <script type="text/javascript">
 	$(document).ready(function() {
-		$('.soundcloud').Tarabu({
+		$('.test').Tarabu({
 			soundcloud_user: 'dubstep',
 			soundcloud_clientId: "bcc776e7aa65dbc29c40ff21a1a94ecd",
-			playlist: [
-				{
-					title:"Cro Magnon Man",
-					artist:"The Stark Palace",
-					mp3:"http://www.jplayer.org/audio/mp3/TSP-01-Cro_magnon_man.mp3",
-					oga:"http://www.jplayer.org/audio/ogg/TSP-01-Cro_magnon_man.ogg",
-					poster: "http://www.jplayer.org/audio/poster/The_Stark_Palace_640x360.png"
-				},{
-					title:"Cro Magnon Man",
-					artist:"The Stark Palace",
-					mp3:"http://www.jplayer.org/audio/mp3/TSP-01-Cro_magnon_man.mp3",
-					oga:"http://www.jplayer.org/audio/ogg/TSP-01-Cro_magnon_man.ogg",
-					poster: "http://www.jplayer.org/audio/poster/The_Stark_Palace_640x360.png"
-				}
-			]
-		});
+		});		
 	});	
 </script>
 
 </body>
 </html>
+
+<div class='tarabu-album'>
+	<div class='tarabu-cover'>
+		<img class='tarabu-artwork'/>
+	</div>
+	<div class='tarabu-playlist'>
+		<div class='tarabu-playlist-description'></div>
+		<ol class='tarabu-playlist-tracks'></ol>
+	</div>
+</div>
+
+
+
+
+<div id="fb-root"></div>
+<script>
+window.fbAsyncInit = function() {
+    FB.init({appId: '185324271585974', status: true, cookie: true, xfbml: true});
+
+    FB.Event.subscribe('edge.create', function(href, widget) {
+ 	  	 alert('You just liked the page!');
+ 	});
+};
+(function() {
+    var e = document.createElement('script');
+    e.type = 'text/javascript';
+    e.src = document.location.protocol +
+        '//connect.facebook.net/en_US/all.js';
+    e.async = true;
+    document.getElementById('fb-root').appendChild(e);
+}());
+</script>
+<fb:like></fb:like>
