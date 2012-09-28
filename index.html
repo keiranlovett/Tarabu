@@ -1,24 +1,40 @@
-<!DOCTYPE html>
-<html class="no-js" lang="en">
-<head>
-<script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
-    <script type="text/javascript" src="includes/javascripts/application.js"></script>
 
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="https://www.facebook.com/2008/fbml">
+<head>
+	<script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+    <script type="text/javascript" src="includes/javascripts/jquery.tarabu.js"></script>
 </head>
 <body>
 
+<div class="soundcloud"></div>
 
-
-						<div class="soundcloud">
-
-						</div>
-
+<a href="http://twitter.com/intent/tweet?url=http://test.com;via=stack">twitter</a>
 	
-	<script type="text/javascript">
+<script type="text/javascript">
 	$(document).ready(function() {
-		$('.soundcloud').animateMenu({animatePadding: 30, defaultPadding:10});
+		$('.soundcloud').Tarabu({
+			soundcloud_URL: 'playlists/405726.json',
+			soundcloud_clientId: "bcc776e7aa65dbc29c40ff21a1a94ecd",
+			playlist: "soundcloud",
+			locked: null
+		});		
+	
 	});	
-	</script>
+</script>
 
 </body>
 </html>
+
+
+<div id="fb-root"></div>
+<script>
+(function() {
+    var e = document.createElement('script');
+    e.type = 'text/javascript';
+    e.src = document.location.protocol +
+        '//connect.facebook.net/en_US/all.js';
+    e.async = true;
+    document.getElementById('fb-root').appendChild(e);
+}());
+</script>
+<fb:like></fb:like>
