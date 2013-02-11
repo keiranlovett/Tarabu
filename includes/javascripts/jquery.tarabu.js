@@ -11,7 +11,8 @@
 		var o = $.extend({}, $.fn.Tarabu.defaults, options);
 		
 		return this.each(function() {	
-			var c = $(this);		
+			var c = $(this),
+				idNo = 0;		
 			//Determine playlist type. If soundcloud is set as the playlist it will load either the complete user set (soundcloud_URL must be set) or selected sets. If local playlists have been set it will load them.
 			if (o.playlist == 'soundcloud') {
 				//Determine if the soundcloud API client ID is set. This is required to access json data.
@@ -70,7 +71,10 @@
 					}
 				}
 			}
-			
+			function populateArray(test) {
+				c.append("<div class='tarabu-playlist' id='tarabu-id" + idNo + "'><div class='tarabu-sleeve'><img class='tarabu-artwork'/></div><div class='tarabu-content'><div class='tarabu-description'></div><ol class='tarabu-tracks'></ol></div></div>");
+				
+			};
 			function parseArray(array) {
 				$.each(array, function (i, elem) {
 					console.log(elem);
@@ -79,8 +83,12 @@
 							console.log(elem.title);
 						});
 					}
+					idNo ++;
+					console.log(idNo);
+					populateArray();
 				});
 			};
+			
 			function parseObject(object) {
 				$.each(object, function (key, val) {
 					var tracks;
@@ -89,13 +97,16 @@
 							console.log(elem.title);
 						});
 					}
+					idNo ++;
+					console.log(idNo);
+					populateArray();
 				});
 			};
 			function parseReturnedJSON(json) {
 				var isObject = (typeof json === 'object' && json instanceof Object),
 					isArray = (typeof json === 'object' && json instanceof Array),
 					useParseArrayAnyway = false,
-					newArray = [];
+					newArray = [];			
 				if (isArray) {
 					parseArray(json);
 				} else if (isObject) {
@@ -105,7 +116,7 @@
 					} else {
 						parseObject(json);
 					}
-				}
+				}	
 			};
 			
 		});
